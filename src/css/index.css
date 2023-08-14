@@ -1,0 +1,116 @@
+:root {
+    --flex-gap: 20px;
+    --background-color-card: rgba(227, 139, 230, 0.619);
+  }
+  
+  body {
+    padding: 0px;
+    margin: 0px;
+    overflow-x: hidden;
+background-color: rgba(246, 212, 240, 0.627);
+  }
+  .photo-card img {
+    display: inline-block;
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  /* .photo-card img:hover {
+    transform: scale(1.2);
+  } */
+  .search-form {
+    display: flex;
+    flex-direction: column;
+    padding: 30px 0;
+    background-color: rgb(255, 196, 244);
+  }
+  .search-form input {
+    font-size: 30px;
+    margin: 0 auto;
+    max-width: 200px;
+    margin-bottom: 30px;
+    border: 2px solid rgb(177, 107, 160);
+    background-color: bisque;
+    border-radius: 10px;
+  }
+  .search-form button {
+    margin: 0 auto;
+    max-width: 200px;
+    font-size: 30px;
+    padding: 10px 30px;
+    border: 3px solid rgb(177, 107, 160);
+    border-radius: 20px;
+    background-color: bisque;
+  }
+  .search-form button:hover {
+    background-color: rgb(231, 195, 228);
+  }
+  .search-form button:active {
+    background-color: rgb(232, 232, 141);
+  }
+  .gallery {
+    max-width: 1400px;
+    margin: 30px auto;
+  
+    display: flex;
+    flex-wrap: wrap;
+    overflow-x: hidden;
+    gap: var(--flex-gap);
+    padding: 20px var(--flex-gap);
+  }
+  .photo-card {
+    width: calc((1440px - 5 * var(--flex-gap)) / 4);
+    background-color: var(--background-color-card);
+    text-decoration: none;
+    font-size: 20px;
+    color: black;
+    font-style: italic;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0px 2px 1px rgba(46, 47, 66, 0.08),
+      0px 2px 4px rgba(46, 47, 66, 0.16), 0px 3px 6px rgba(46, 47, 66, 0.08);
+    transition: transform 400ms ease-out;
+  }
+  
+  .photo-card:hover {
+    transform: scale(1.1);
+  }
+  
+  .info {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .info-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .info-item b {
+    display: inline-block;
+    margin-bottom: 20px;
+  }
+  .is-hidden {
+    visibility: hidden;
+  }
+  .load-more {
+    display: block;
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: bisque;
+    color: rgb(4, 0, 223);
+    padding: 15px 30px;
+  
+    font-size: 30px;
+    font-weight: 700;
+    border: 3px solid rgb(4, 0, 223);
+    border-radius: 20px;
+  }
+  .load-more:hover {
+    background-color: aqua;
+  }
+  .load-more:active {
+    background-color: yellow;
+  }
