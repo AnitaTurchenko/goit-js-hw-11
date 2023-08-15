@@ -19,7 +19,7 @@ const refs = {
 
 refs.form.addEventListener('submit', fetchData);
 refs.loadBtn.addEventListener('click', onLoadMore);
-refs.loadBtn.classList.toggle('is-hidden');
+refs.loadBtn.classList.add('is-hidden');
 refs.alertLoader.classList.add('is-hidden');
 
     
@@ -71,6 +71,7 @@ async function fetchData(event) {
         if (inputValue === "") {
             options.set('page', `1`);
             Notify.failure("Invalid value. Input text, please.");
+            clearMarkup();
            
             return;
         }
@@ -82,20 +83,21 @@ async function fetchData(event) {
         if (page > maxPage) {
             error = 'max page limit';
              maxPage = 10;
-            refs.loadBtn.classList.add('is-hidden');
+            // refs.loadBtn.classList.add('is-hidden');
             throw new Error(error);
         }
         refs.alertLoader.classList.toggle('is-hidden');
 
         const result = await fetchUrl(`${BASE_URL}?${options}`);
-        refs.loadBtn.classList.remove('is-hidden');
+        // refs.loadBtn.classList.remove('is-hidden');
         totalHits = result.data.totalHits;
 
         if (totalHits < perPage) {
-            refs.loadBtn.classList.add('is-hidden');
+            // refs.loadBtn.classList.add('is-hidden');
         }
         if (totalHits === 0) {
             Notify.failure("Sorry, there are no images matching your search query. Please try again.");
+            clearMarkup();
            
         }
          else {
@@ -127,7 +129,8 @@ async function fetchData(event) {
     } catch (error) {
         console.log(error);
         options.set('page', `1`);
-        Notify.failure("Sorry, there are no images matching your search query. Please try again.");   
+        Notify.failure("Sorry, there are no images matching your search query. Please try again.");
+        clearMarkup();  
      }
           
 };

@@ -95,7 +95,7 @@ background-color: rgba(246, 212, 240, 0.627);
     visibility: hidden;
   }
   .load-more {
-    display: block;
+    display: none;
     margin-top: 30px;
     margin-left: auto;
     margin-right: auto;
