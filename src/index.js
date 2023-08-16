@@ -135,7 +135,7 @@ async function fetchData(event) {
             
         }
 
-        maxPage = Math.ceil(totalHits / perPage);      
+        let maxPage = Math.ceil(totalHits / perPage);      
         clearMarkup();
         renderMarkup(result.data.hits);
 
