@@ -54,12 +54,10 @@ const options = new URLSearchParams( {
     image_type: 'photo',
     orientation: 'horizontal',
     safesearch: true,
-    page: 1,
 });
 let page = Number(options.get('page'));
 let perPage = Number(options.get('per_page'));
 let totalHits = 0;
-let maxPage = 10;
 
 
 
@@ -80,21 +78,21 @@ async function fetchData(event) {
             options.set('q', `${inputValue}`);
              }
                              
-        if (page > maxPage) {
-            error = 'max page limit';
-             maxPage = 10;
-            // refs.loadBtn.classList.add('is-hidden');
-            throw new Error(error);
-        }
+        // if (page > maxPage) {
+        //     error = 'max page limit';
+        //      maxPage = 10;
+        //     // refs.loadBtn.classList.add('is-hidden');
+        //     throw new Error(error);
+        // }
         refs.alertLoader.classList.toggle('is-hidden');
 
         const result = await fetchUrl(`${BASE_URL}?${options}`);
         // refs.loadBtn.classList.remove('is-hidden');
         totalHits = result.data.totalHits;
 
-        if (totalHits < perPage) {
-            // refs.loadBtn.classList.add('is-hidden');
-        }
+        // if (totalHits < perPage) {
+        //     // refs.loadBtn.classList.add('is-hidden');
+        // }
         if (totalHits === 0) {
             Notify.failure("Sorry, there are no images matching your search query. Please try again.");
             clearMarkup();
@@ -105,18 +103,13 @@ async function fetchData(event) {
             
         }
 
-        maxPage=Math.ceil(totalHits / perPage);      
+        maxPage = Math.ceil(totalHits / perPage);      
         clearMarkup();
         renderMarkup(result.data.hits);
 
         refs.alertLoader.classList.toggle('is-hidden');
         page += 1;
         options.set('page', `${page}`);
-
-        if (totalHits < perPage) {
-            
-          refs.loadBtn.classList.add('is-hidden');
-        }
         window.addEventListener('scroll', throttle(() => { endlessScroll(); },1000));
         if (page === maxPage) {
                
@@ -149,21 +142,22 @@ async function onLoadMore() {
            return;               
         }  
         
-       refs.loadBtn.classList.add('is-hidden');
+    //    refs.loadBtn.classList.add('is-hidden');
        refs.alertLoader.classList.toggle('is-hidden');
         
        const result = await fetchUrl(`${BASE_URL}?${options}`);                
          
         renderMarkup(result.data.hits);
 
-        refs.loadBtn.classList.remove('is-hidden');
+        // refs.loadBtn.classList.remove('is-hidden');
         refs.alertLoader.classList.toggle('is-hidden');
         page += 1;              
         options.set('page', `${page}`);                
         return result;
         
     } catch (error) {
-        refs.loadBtn.classList.add('is-hidden');
+        // refs.loadBtn.classList.add('is-hidden');
+        console.log(error);
     }
 }
 

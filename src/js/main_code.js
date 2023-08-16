@@ -20,12 +20,8 @@ async function fetchUrl(url) {
          const data = await axios.get(url);
          return data;
      } catch (error) {
-         console.log(error);
-        
-     }
-          
-    
-         
+         console.log(error);  
+     }   
 }
 
 function renderMarkup(dataArray) {
