@@ -54,9 +54,6 @@ const optionsSet = {
   </div>
 </a>`
     ).join('');
-    if (refs.loadBtn.classList.contains('is-hidden')) {
-        refs.loadBtn.classList.remove('is-hidden');
-    }
     refs.gallery.insertAdjacentHTML("beforeend", markup);
    
     if (page === 1) {
@@ -102,44 +99,32 @@ const options = new URLSearchParams( {
     orientation: 'horizontal',
     safesearch: true,
 });
+
 let page = Number(options.get('page'));
 let perPage = Number(options.get('per_page'));
 let totalHits = 0;
 
-
-
 async function fetchData(event) {
     try {
         event.preventDefault();
-        page = Number(options.get('page'));
+        // page = Number(options.get('page'));
         let inputValue = (event.currentTarget.elements.searchQuery.value).trim();
         if (inputValue === "") {
             options.set('page', `1`);
             Notify.failure("Invalid value. Input text, please.");
             clearMarkup();
-           
             return;
         }
         if (options.get('q') !== inputValue) {
             options.set('page', `1`);
             options.set('q', `${inputValue}`);
              }
-                             
-        // if (page > maxPage) {
-        //     error = 'max page limit';
-        //      maxPage = 10;
-        //     // refs.loadBtn.classList.add('is-hidden');
-        //     throw new Error(error);
-        // }
+
         refs.alertLoader.classList.toggle('is-hidden');
 
         const result = await fetchUrl(`${BASE_URL}?${options}`);
-        // refs.loadBtn.classList.remove('is-hidden');
         totalHits = result.data.totalHits;
 
-        // if (totalHits < perPage) {
-        //     // refs.loadBtn.classList.add('is-hidden');
-        // }
         if (totalHits === 0) {
             Notify.failure("Sorry, there are no images matching your search query. Please try again.");
             clearMarkup();
@@ -158,9 +143,9 @@ async function fetchData(event) {
         page += 1;
         options.set('page', `${page}`);
         window.addEventListener('scroll', throttle(() => { endlessScroll(); },1000));
-        if (page === maxPage) {
-               
-            page = 1;
+
+        if (page === maxPage) {  
+            // page = 1;
             options.set('page', `${page}`);
             window.removeEventListener('scroll', throttle(() => { endlessScroll(); },1000));
         }
@@ -179,45 +164,33 @@ async function fetchData(event) {
 
 async function onLoadMore() {
     try {
-      
-        page = Number(options.get('page'));
-       
-       if (page > maxPage) {              
-          
+       if (page > maxPage) {               
            window.removeEventListener('scroll', throttle(() => { endlessScroll(); },600));
-           refs.loadBtn.classList.add('is-hidden');
            return;               
         }  
         
-    //    refs.loadBtn.classList.add('is-hidden');
-       refs.alertLoader.classList.toggle('is-hidden');
+    //    refs.alertLoader.classList.toggle('is-hidden');
         
        const result = await fetchUrl(`${BASE_URL}?${options}`);                
          
         renderMarkup(result.data.hits);
 
-        // refs.loadBtn.classList.remove('is-hidden');
         refs.alertLoader.classList.toggle('is-hidden');
         page += 1;              
         options.set('page', `${page}`);                
         return result;
         
     } catch (error) {
-        // refs.loadBtn.classList.add('is-hidden');
         console.log(error);
     }
 }
 
-
 async function endlessScroll() {
         
     let clientRect = document.documentElement.getBoundingClientRect();
-    let clientHeightWindow=document.documentElement.clientHeight;
+    let clientHeightWindow = document.documentElement.clientHeight;
             
-    if (clientRect.bottom < clientHeightWindow + 400) {
-                
+    if (clientRect.bottom < clientHeightWindow + 400) {    
         onLoadMore();
     };                      
 };
-
-export {refs, page };
