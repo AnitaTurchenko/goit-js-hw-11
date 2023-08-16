@@ -82,10 +82,12 @@ async function fetchData(event) {
         page += 1;
         options.set('page', `${page}`);
 
-        if (page <= maxPage) {
+        if (page <= maxPage && !window.scrollEventListenerAdded) {
             window.addEventListener('scroll', throttle(() => endlessScroll(), 1000));
-        } else {
+            window.scrollEventListenerAdded = true;
+        } else if (page > maxPage && window.scrollEventListenerAdded) {
             window.removeEventListener('scroll', throttle(() => endlessScroll(), 1000));
+            window.scrollEventListenerAdded = false;
         }
                
     } catch (error) {
