@@ -134,8 +134,7 @@ async function fetchData(event) {
             Notify.success(`Hooray! We found ${totalHits} images.`);
             
         }
-
-        let maxPage = Math.ceil(totalHits / perPage);      
+      
         clearMarkup();
         renderMarkup(result.data.hits);
 
@@ -144,6 +143,7 @@ async function fetchData(event) {
         options.set('page', `${page}`);
         window.addEventListener('scroll', throttle(() => { endlessScroll(); },1000));
 
+        let maxPage = Math.ceil(totalHits / perPage);
         if (page === maxPage) {  
             // page = 1;
             options.set('page', `${page}`);
